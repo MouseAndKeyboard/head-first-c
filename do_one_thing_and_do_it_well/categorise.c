@@ -11,7 +11,11 @@ int main(int argc, char* args[]) {
     }
 
     char line[80];
-    FILE* in = fopen("gpsdata.data", "r");
+    FILE* in;
+    if (!(in = fopen("gpsdata.data", "r"))) {
+        fprintf(stderr, "Can't open the reading file.\n");
+        return 1;
+    }
     FILE* f1 = fopen(args[2], "w");
     FILE* f2 = fopen(args[4], "w");
     FILE* f3 = fopen(args[5], "w");

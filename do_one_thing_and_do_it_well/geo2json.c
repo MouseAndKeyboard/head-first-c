@@ -15,6 +15,16 @@ int main() {
         else
             started = 1;
 
+        /* Error checking */
+        if (lat < -90 || lat > 90) {
+            printf("Latitude %f is outside legal range (-90,90).\n", lat);
+            return 2;
+        }
+        if (lon < -180 || lon > 180) {
+            printf("Longitude %f is outside legal range (-180,180).\n", lon);
+            return 2;
+        }
+
         printf("{latitude: %f, longitude: %f, info: '%s'}", lat, lon, info);
        
     }

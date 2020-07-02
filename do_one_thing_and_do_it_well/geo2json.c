@@ -17,11 +17,11 @@ int main() {
 
         /* Error checking */
         if (lat < -90 || lat > 90) {
-            printf("Latitude %f is outside legal range (-90,90).\n", lat);
+            fprintf(stderr, "Latitude %f is outside legal range (-90,90).\n", lat);
             return 2;
         }
         if (lon < -180 || lon > 180) {
-            printf("Longitude %f is outside legal range (-180,180).\n", lon);
+            fprintf(stderr, "Longitude %f is outside legal range (-180,180).\n", lon);
             return 2;
         }
 

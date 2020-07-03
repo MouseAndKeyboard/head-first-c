@@ -18,14 +18,14 @@ node* create(char *message) {
 }
 
 void release(node *root) {
-    if (root->no) {
-        release(root->no);
-    } else if (root->yes) {
-        release(root->yes);
-    } else {
-        free(root->message);
+    if (root) {
+        if (root->no)
+            release(root->no);
+        if (root->yes)
+            release(root->yes);
+        if (root->message)
+            free(root->message);
         free(root);
-        return;
     }
 }
 
@@ -68,9 +68,9 @@ int main() {
                 node *no_node = create(current->message);
                 current->no = no_node;
 
-                /* Pretty sure that this may cause a memory leak */
                 printf("Give me a question which is TRUE for %s but FALSE for %s: ", suspect, current->message);
                 fgets(question, 79, stdin);
+                free(current->message);
                 current->message = strdup(question);
 
                 break;
@@ -78,6 +78,8 @@ int main() {
         }
 
     } while (yes_no("Run again"));
+
+    release(start_node);
 
     return 0;
 }

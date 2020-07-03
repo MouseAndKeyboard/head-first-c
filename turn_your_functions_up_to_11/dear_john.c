@@ -1,7 +1,6 @@
 
 #include <stdio.h>
 
-
 enum response_type {DUMP, SECOND_CHANCE, MARRIAGE};
 typedef struct {
     char *name;
@@ -26,25 +25,14 @@ void marriage(char *n) {
     puts("us with a proposal of marriage");
 }
 
+void (*replies[3])(char*) = {dump, second_chance, marriage};
+
 int main() {
     response r[] = { {"Mike", DUMP}, {"Luis", SECOND_CHANCE}, {"Matt", SECOND_CHANCE}, {"William", MARRIAGE} };
 
     int i;
     for (i=0; i<4; i++) {
-        switch (r[i].type) {
-            case DUMP:
-                dump(r[i].name);
-                break;
-            case SECOND_CHANCE:
-                second_chance(r[i].name);
-                break;
-            case MARRIAGE:
-                marriage(r[i].name);
-                break;
-        }
-
-       
-
+        (replies[r[i].type])(r[i].name);
     }
     return 0;
 }

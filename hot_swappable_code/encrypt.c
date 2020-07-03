@@ -1,6 +1,6 @@
 #include "encrypt.h"
 
-void xorcrypt(char* msg, int key) {
+void encrypt(char* msg, int key) {
     while(*msg) {
         *msg = *msg ^ key;
         msg++;

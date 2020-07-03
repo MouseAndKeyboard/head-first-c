@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include "tax.h"
 
 float total = 0.0;
 short count = 0;

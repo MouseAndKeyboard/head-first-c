@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 void error(char *msg) {
     fprintf(stderr, "%s: %s.\n", msg, strerror(errno));
@@ -29,6 +30,12 @@ int main(int argc, char *args[]) {
             error("Can't run script");
     }
 
-    fclose(f);
+    int pid_status;
+    if (waitpid(pid, &pid_status, 0) == 1)
+        error("Error waiting for child");
+
+    if (WEXITSTATUS(pid_status))
+        puts("Non-zero return status from child");
+
     return 0;
 }

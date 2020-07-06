@@ -12,10 +12,6 @@ void error(char *msg) {
     exit(1);
 }
 
-void bind_socket(int port, int listener) {
-
-}
-
 int main(int argc, char *args[]) {
 
     char *advice[] = {
@@ -26,8 +22,8 @@ int main(int argc, char *args[]) {
     "You might want to rethink that haircut\r\n"
 };
 
-    int listener_d;
-    if((listener_d = socket(PF_INET, SOCK_STREAM, 0)) == -1)
+    int listener_d = socket(PF_INET, SOCK_STREAM, 0);
+    if(listener_d == -1)
         error("Socket opening failed");
 
     int reuse = 1;
@@ -38,8 +34,7 @@ int main(int argc, char *args[]) {
     name.sin_family = PF_INET;
     name.sin_port = (in_port_t)htons(30000);
     name.sin_addr.s_addr = htonl(INADDR_ANY);
-   
-    if (bind(listener_d, (struct sockaddr*)&name, sizeof(name)) == -1)
+    if (bind(listener_d, (struct sockaddr *) &name, sizeof(name)) == -1)
         error("Binding to port failed");
 
     if (listen(listener_d, 10) == -1)
@@ -50,8 +45,8 @@ int main(int argc, char *args[]) {
     while (1) {
         struct sockaddr_storage client_addr;
         unsigned int address_size = sizeof(client_addr);
-        int connect_d;
-        if ((connect_d = accept(listener_d, (struct sockaddr *)&client_addr, &address_size) == -1))
+        int connect_d = accept(listener_d, (struct sockaddr *)&client_addr, &address_size);
+        if (connect_d == -1)
             error("Accepting connection failed");
 
         char *msg = advice[rand() % 5];

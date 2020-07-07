@@ -12,10 +12,14 @@ void error(char *msg) {
 
 int drinks = 2000000;
 
+pthread_mutex_t a_lock = PTHREAD_MUTEX_INITIALIZER;
+
 void* drink(void* data) {
     int i;
     for (i=0; i<100000; i++) {
+        pthread_mutex_lock(&a_lock);
         drinks -= 1;
+        pthread_mutex_unlock(&a_lock);
     }
     return NULL;
 }
